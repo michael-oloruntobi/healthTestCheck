@@ -1,4 +1,4 @@
-const { Builder, By, Capabilities } = require("selenium-webdriver");
+const { Builder, By, Capabilities, Select } = require("selenium-webdriver");
 const assert = require("assert");
 const ltcapabilities = require("../capabilities");
 
@@ -72,7 +72,7 @@ class BasePage {
     let dropdown = await this.driver.findElement(locator);
 
     // Create a Select object from the <select> element
-    let selectObject = new this.Select(dropdown);
+    let selectObject = new Select(dropdown);
 
     // Select an option by visible text
     await selectObject.selectByVisibleText(text);
