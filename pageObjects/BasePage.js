@@ -4,15 +4,15 @@ const ltcapabilities = require("../capabilities");
 
 class BasePage {
   constructor() {
-    // Set Chrome options for headless mode
-    const chromeOptions = {
-      args: ["--headless", "--disable-gpu"],
+    // Set Firefox options for headless mode
+    const firefoxOptions = {
+      args: ["-headless"],
     };
 
-    // Merge capabilities and Chrome options
-    const mergedCapabilities = Capabilities.chrome().set(
-      "chromeOptions",
-      chromeOptions
+    // Merge capabilities and Firefox options
+    const mergedCapabilities = Capabilities.firefox().set(
+      "moz:firefoxOptions",
+      firefoxOptions
     );
 
     this.driver = new Builder().withCapabilities(mergedCapabilities).build();
