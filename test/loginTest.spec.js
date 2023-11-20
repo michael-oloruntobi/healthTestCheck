@@ -1,20 +1,14 @@
-const { Builder, Browser, By, Key, until } = require("selenium-webdriver");
-const ltcapabilities = require("../capabilities");
 const { LoginPage } = require("../pageObjects/LoginPage");
 
 describe("Login", function () {
-  let driver;
   let loginPage;
 
   beforeEach(async function () {
-    // driver = new Builder()
-    //   .withCapabilities(ltcapabilities.capabilities)
-    //   .build();
-    // driver.get("https://katalon-demo-cura.herokuapp.com/");
-    loginPage = new LoginPage(driver);
+    loginPage = new LoginPage();
+    await loginPage.openUrl();
   });
   afterEach(async function () {
-    await driver.quit();
+    await loginPage.quitDriver();
   });
 
   it("should login successfully using valid credentials", async function () {

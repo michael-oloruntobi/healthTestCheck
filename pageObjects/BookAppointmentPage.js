@@ -8,9 +8,10 @@ const {
   Actions,
 } = require("selenium-webdriver");
 const assert = require("assert");
-class BookAppointmentPage {
-  constructor(driver) {
-    this.driver = driver;
+const BasePage = require("./BasePage");
+class BookAppointmentPage extends BasePage {
+  constructor() {
+    super();
     this.facilityDropdown = By.id("combo_facility");
     this.facilities = "Hongkong CURA Healthcare Center";
     this.loginURL = By.xpath('//a[contains(text(), "Login")]');
@@ -29,17 +30,6 @@ class BookAppointmentPage {
     this.facilityText = By.xpath('//p[@id="facility"]');
     this.hospitalReadmissionText = By.xpath('//p[@id="hospital_readmission"]');
     this.commentText = By.id("comment");
-  }
-
-  async selectTextFromDropDown(locator, text) {
-    // Locate the <select> element by ID
-    let dropdown = await this.driver.findElement(locator);
-
-    // Create a Select object from the <select> element
-    let selectObject = new Select(dropdown);
-
-    // Select an option by visible text
-    await selectObject.selectByVisibleText(text);
   }
 
   async bookValidAppointment() {
