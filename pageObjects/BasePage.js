@@ -1,19 +1,22 @@
-const {
-  Builder,
-  Browser,
-  By,
-  Key,
-  until,
-  Select,
-  Actions,
-} = require("selenium-webdriver");
+const { Builder, By, Capabilities } = require("selenium-webdriver");
 const assert = require("assert");
 const ltcapabilities = require("../capabilities");
+
 class BasePage {
   constructor() {
-    this.driver = new Builder()
-      .withCapabilities(ltcapabilities.capabilities)
-      .build();
+    // Set Chrome options for headless mode
+    const chromeOptions = {
+      args: ["--headless", "--disable-gpu"],
+    };
+
+    // Merge capabilities and Chrome options
+    const mergedCapabilities = Capabilities.chrome().set(
+      "chromeOptions",
+      chromeOptions
+    );
+
+    this.driver = new Builder().withCapabilities(mergedCapabilities).build();
+
     this.validUsername = "John Doe";
     this.validPassword = "ThisIsNotAPassword";
     this.menu = By.id("menu-toggle");
@@ -43,6 +46,7 @@ class BasePage {
     //Click sign in button
     await this.driver.findElement(By.id("btn-login")).click();
   }
+
   async assertElementIsDisplayed(locator) {
     let isElementPresent = await this.driver
       .findElement(By.xpath(locator))
@@ -68,10 +72,11 @@ class BasePage {
     let dropdown = await this.driver.findElement(locator);
 
     // Create a Select object from the <select> element
-    let selectObject = new Select(dropdown);
+    let selectObject = new this.Select(dropdown);
 
     // Select an option by visible text
     await selectObject.selectByVisibleText(text);
   }
 }
+
 module.exports = BasePage;
